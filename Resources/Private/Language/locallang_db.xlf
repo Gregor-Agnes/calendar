@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2018-01-31T20:31:14Z" product-name="calendar">
+		<header/>
+		<body>
+			<trans-unit id="tx_calendar_domain_model_event">
+				<source>Event</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_event.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_event.organizer">
+				<source>Organizer</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_event.exception_event_group">
+				<source>Exception Event Group</source>
+			</trans-unit>
+			<trans-unit id="tx_cal_event.tx_extbase_type.Tx_Calendar_Event">
+				<source>calendar Event</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_organizer">
+				<source>Organizer</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_organizer.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_cal_organizer.tx_extbase_type.Tx_Calendar_Organizer">
+				<source>calendar Organizer</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_exceptonevent">
+				<source>Excepton Event</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_exceptonevent.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_exceptonevent.start_date">
+				<source>Start Date</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_exceptonevent.stop_date">
+				<source>Stop Date</source>
+			</trans-unit>
+			<trans-unit id="tx_cal_exception_event.tx_extbase_type.Tx_Calendar_ExceptonEvent">
+				<source>calendar ExceptonEvent</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_exceptioneventgroup">
+				<source>Exception Event Group</source>
+			</trans-unit>
+			<trans-unit id="tx_calendar_domain_model_exceptioneventgroup.exception_event">
+				<source>Exception Event</source>
+			</trans-unit>
+			<trans-unit id="tx_cal_exception_event_group.tx_extbase_type.Tx_Calendar_ExceptionEventGroup">
+				<source>calendar ExceptionEventGroup</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

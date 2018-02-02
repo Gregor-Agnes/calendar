@@ -1,0 +1,19 @@
+{
+    "name": "zwo3/calendar",
+    "type": "typo3-cms-extension",
+    "description": "Extbase and Fluid calendar based on cal (TYPO3-extensions/cal)",
+    "authors": [
+        {
+            "name": "Gregor Agnes",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^8.7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zwo3\\Calendar\\": "Classes"
+        }
+    }
+}
