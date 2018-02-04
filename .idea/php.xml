@@ -3,6 +3,7 @@
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="C:\Users\Gregor\Documents\sources\typo3_src-8.7.7" />
+      <path value="C:\Users\Gregor\Documents\sources\Carbon" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

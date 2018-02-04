@@ -1,36 +1,33 @@
-
 config.tx_extbase {
-  persistence {
-    classes {
+	persistence {
+		classes {
+			Zwo3\Calendar\Domain\Model\Event {
+				mapping {
+					tableName = tx_cal_event
+					recordType = 0
+				}
+			}
 
-      Zwo3\Calendar\Domain\Model\Event {
-        mapping {
-          tableName = tx_cal_event
-          recordType = Tx_Calendar_Event
-        }
-      }
+			Zwo3\Calendar\Domain\Model\Organizer {
+				mapping {
+					tableName = tx_cal_organizer
+					recordType = 0
+				}
+			}
 
-      Zwo3\Calendar\Domain\Model\Organizer {
-        mapping {
-          tableName = tx_cal_organizer
-          recordType = Tx_Calendar_Organizer
-        }
-      }
+			Zwo3\Calendar\Domain\Model\ExceptonEvent {
+				mapping {
+					tableName = tx_cal_exception_event
+					recordType = 0
+				}
+			}
 
-      Zwo3\Calendar\Domain\Model\ExceptonEvent {
-        mapping {
-          tableName = tx_cal_exception_event
-          recordType = Tx_Calendar_ExceptonEvent
-        }
-      }
-
-      Zwo3\Calendar\Domain\Model\ExceptionEventGroup {
-        mapping {
-          tableName = tx_cal_exception_event_group
-          recordType = Tx_Calendar_ExceptionEventGroup
-        }
-      }
-
-    }
-  }
+			Zwo3\Calendar\Domain\Model\ExceptionEventGroup {
+				mapping {
+					tableName = tx_cal_exception_event_group
+					recordType = 0
+				}
+			}
+		}
+	}
 }

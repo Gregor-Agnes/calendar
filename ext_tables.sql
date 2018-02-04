@@ -6,8 +6,13 @@ CREATE TABLE tx_cal_event (
 	title varchar(255) DEFAULT '' NOT NULL,
 	organizer int(11) unsigned DEFAULT '0',
 	exception_event_group int(11) unsigned DEFAULT '0' NOT NULL,
-
+  sorting int(11) DEFAULT '0' NOT NULL,
+	start DATETIME DEFAULT NULL NULL,
+	stop DATETIME DEFAULT NULL NULL,
+ INDEX `start` (`start`),
+ INDEX `stop` (`stop`)
 );
+
 
 #
 # Table structure for table 'tx_cal_organizer'
