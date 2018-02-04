@@ -1,33 +1,34 @@
 
 config.tx_extbase {
   persistence {
-    classes {
+
+	  classes {
 
       Zwo3\Calendar\Domain\Model\Event {
         mapping {
           tableName = tx_cal_event
-          recordType = Tx_Calendar_Event
+          recordType = 0
         }
       }
 
       Zwo3\Calendar\Domain\Model\Organizer {
         mapping {
           tableName = tx_cal_organizer
-          recordType = Tx_Calendar_Organizer
+          recordType = 0
         }
       }
 
       Zwo3\Calendar\Domain\Model\ExceptonEvent {
         mapping {
           tableName = tx_cal_exception_event
-          recordType = Tx_Calendar_ExceptonEvent
+          recordType = 0
         }
       }
 
       Zwo3\Calendar\Domain\Model\ExceptionEventGroup {
         mapping {
           tableName = tx_cal_exception_event_group
-          recordType = Tx_Calendar_ExceptionEventGroup
+          recordType = 0
         }
       }
 

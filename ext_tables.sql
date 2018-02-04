@@ -6,7 +6,7 @@ CREATE TABLE tx_cal_event (
 	title varchar(255) DEFAULT '' NOT NULL,
 	organizer int(11) unsigned DEFAULT '0',
 	exception_event_group int(11) unsigned DEFAULT '0' NOT NULL,
-
+  sorting int(11) DEFAULT '0' NOT NULL,
 );
 
 #

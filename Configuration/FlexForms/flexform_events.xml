@@ -15,7 +15,7 @@
 								<items>
 									<numIndex index="0">
 										<numIndex index="0">Display events</numIndex>
-										<numIndex index="1">Event-&gt;list;Event-&gt;search</numIndex>
+										<numIndex index="1">Event-&gt;list;Event->show;Event-&gt;search</numIndex>
 									</numIndex>
 									<numIndex index="1">
 										<numIndex index="0">Display organizer</numIndex>

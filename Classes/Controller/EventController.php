@@ -12,6 +12,8 @@ namespace Zwo3\Calendar\Controller;
  *
  ***/
 
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * EventController
  */
@@ -56,4 +58,5 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
 
     }
+
 }
