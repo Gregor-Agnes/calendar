@@ -13,6 +13,13 @@ CREATE TABLE tx_cal_event (
  INDEX `stop` (`stop`)
 );
 
+CREATE TABLE tx_cal_index (
+	start DATETIME DEFAULT NULL NULL,
+	stop DATETIME DEFAULT NULL NULL,
+ INDEX `start` (`start`),
+ INDEX `stop` (`stop`)
+);
+
 
 #
 # Table structure for table 'tx_cal_organizer'

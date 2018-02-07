@@ -64,3 +64,5 @@ call_user_func(
     }
 );
 
+$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['cal'] = 'Zwo3\\Calendar\\Hook\\TCEmainHook';
+$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['cal'] = 'Zwo3\\Calendar\\Hook\\TCEmainHook';
