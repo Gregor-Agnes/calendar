@@ -20,13 +20,28 @@ CREATE TABLE tx_cal_index (
  INDEX `stop` (`stop`)
 );
 
+CREATE TABLE tx_cal_recurrence_index (
+	uid int(11) unsigned NOT NULL auto_increment,
+	tablename varchar(30) DEFAULT '' NOT NULL,
+	start DATETIME DEFAULT NULL NULL,
+	stop DATETIME DEFAULT NULL NULL,
+	event_uid int(11) DEFAULT '-1' NOT NULL,
+	event_deviation_uid int(11) DEFAULT '-1' NOT NULL,
+	PRIMARY KEY (uid),
+	KEY start (start),
+	KEY event_uid (event_uid),
+	KEY event_uid_start (event_uid,start)
+
+	);
+
+
 
 #
 # Table structure for table 'tx_cal_organizer'
 #
 CREATE TABLE tx_cal_organizer (
 
-	title varchar(255) DEFAULT '' NOT NULL,
+	title varchar(255) DEFAULT '' NOT NULL
 
 );
 
@@ -36,8 +51,9 @@ CREATE TABLE tx_cal_organizer (
 CREATE TABLE tx_cal_exception_event (
 
 	title varchar(255) DEFAULT '' NOT NULL,
-	start_date date DEFAULT '0000-00-00',
-	stop_date date DEFAULT '0000-00-00',
+	tx_extbase_type varchar(255) DEFAULT '' NOT NULL,
+		start_date date DEFAULT '0000-00-00',
+	stop_date date DEFAULT '0000-00-00'
 
 );
 

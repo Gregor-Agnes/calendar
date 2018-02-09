@@ -40,27 +40,37 @@ class TCEmainHook
         $id,
         \TYPO3\CMS\Core\DataHandling\DataHandler &$pObj
     ) {
-        // 1970-01-01T18:00:00+00:00
-        $startDate = Carbon::parse($fieldArray['start_date']);
-        $startTime = Carbon::parse($fieldArray['start_time']);
-
-        $startDateTime = $startDate->addSeconds($startTime->secondsSinceMidnight())->toDateTimeString();
-
-        $endDate = Carbon::parse($fieldArray['end_date']);
-        $endTime = Carbon::parse($fieldArray['end_time']);
-
-        $endDateTime = $endDate->addSeconds($endTime->secondsSinceMidnight())->toDateTimeString();
-
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_event');
 
         /** @var QueryBuilder $queryBuilder */
-        $update =  $queryBuilder
-            ->update('tx_cal_event')
-            ->set('start', $startDateTime)
-            ->set('stop', $endDateTime)
-            ->where (
-             $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($id))
-            )->execute();
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_event');
+
+        // 1970-01-01T18:00:00+00:00
+        if($fieldArray['start_date']) {
+            $startDate = Carbon::parse($fieldArray['start_date']);
+            $startTime = Carbon::parse($fieldArray['start_time']);
+
+            $startDateTime = $startDate->addSeconds($startTime->secondsSinceMidnight())->toDateTimeString();
+
+        $queryBuilder->set('start', $startDateTime);
+
+        }
+
+if($fieldArray['end_date']) {
+    $endDate = Carbon::parse($fieldArray['end_date']);
+    $endTime = Carbon::parse($fieldArray['end_time']);
+
+    $endDateTime = $endDate->addSeconds($endTime->secondsSinceMidnight())->toDateTimeString();
+    $queryBuilder->set('stop', $endDateTime);
+
+}
+
+if ($startDateTime || $endDateTime) {
+    $queryBuilder
+        ->update('tx_cal_event')
+        ->where (
+            $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($id))
+        )->execute();
+}
 
     }
 

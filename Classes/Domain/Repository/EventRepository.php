@@ -1,15 +1,12 @@
 <?php
+
 namespace Zwo3\Calendar\Domain\Repository;
 
 /***
- *
  * This file is part of the "calendar" Extension for TYPO3 CMS.
- *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
  *  (c) 2018 Gregor Agnes <ga@zwo3.de>, zwo3
- *
  ***/
 
 use Carbon\Carbon;
@@ -26,6 +23,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  */
 class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+
     /**
      * @var array
      */
@@ -33,7 +31,8 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
     ];
 
-    public function initializeObject() {
+    public function initializeObject()
+    {
         // Einstellungen laden
         /** @var Typo3QuerySettings $querySettings */
         $querySettings = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Persistence\\Generic\\Typo3QuerySettings');
@@ -44,49 +43,53 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $querySettings->setRespectStoragePage(false);
 
         // Einstellungen als Default setzen
-       # $this->setDefaultQuerySettings($querySettings);
+        # $this->setDefaultQuerySettings($querySettings);
     }
 
     /**
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAll()
+    public function findAll($withRecurrence = true, $maxResults = 20)
     {
-
-            $query = $this->createQuery();
-$query->statement("UPDATE tx_cal_event SET start = DATE_ADD(CONCAT(SUBSTRING(`start_date`,1,4), '-', SUBSTRING(`start_date`,5,2), '-', SUBSTRING(`start_date`,7,2)), INTERVAL `start_time` SECOND),
-stop = DATE_ADD(CONCAT(SUBSTRING(`end_date`,1,4), '-', SUBSTRING(`end_date`,5,2), '-', SUBSTRING(`end_date`,7,2)), INTERVAL `end_time` SECOND)");
-$query->execute();
-
-
-
 
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_event');
 
-        $eventsArray = $queryBuilder->select(...[
+        $queryBuilder->select(...[
             'tx_cal_event.uid',
             'title',
             'description',
-            'start_date AS startDate',
-            'start_time AS startTime'
+            'freq',
+            'until',
+            'cnt',
+            'byday',
+            'bymonthday',
+            'bymonth',
+            'intrval',
+            'rdate',
+            'rdate_type',
+            'start',
+            'stop'
         ])
             ->from('tx_cal_event')
             ->where(
                 ('start_date > ' . Carbon::now()->format('Ymd'))
-            )
-            ->rightJoin(
-                'tx_cal_event',
-                'tx_cal_index',
-                'index',
-                $queryBuilder->expr()->eq('index.event_uid', $queryBuilder->quoteIdentifier('tx_cal_event.uid'))
-            )
-            ->setMaxResults(20)
-            ->execute()->fetchAll();
-
+            );
+            if ($withRecurrence) {
+                $queryBuilder->rightJoin(
+                    'tx_cal_event',
+                    'tx_cal_index',
+                    'index',
+                    $queryBuilder->expr()->eq('index.event_uid', $queryBuilder->quoteIdentifier('tx_cal_event.uid'))
+                );
+            }
+            if ($maxResults) {
+                $queryBuilder->setMaxResults($maxResults);
+            }
+        $eventsArray = $queryBuilder->execute()->fetchAll();
 
         // Array values mappen -> Event
-        foreach($eventsArray as $event) {
+        foreach ($eventsArray as $event) {
             $events[] = $this->objectManager->get('TYPO3\CMS\Extbase\Property\PropertyMapper')
                 ->convert(
                     $event,

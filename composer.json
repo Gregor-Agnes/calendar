@@ -10,7 +10,8 @@
     ],
     "require": {
         "typo3/cms-core": "^8.7.1",
-        "nesbot/carbon": "^1.22.1"
+        "nesbot/carbon": "^1.22.1",
+        "simshaun/recurr": "^3.0"
     },
     "autoload": {
         "psr-4": {

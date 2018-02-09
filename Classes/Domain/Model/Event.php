@@ -68,21 +68,28 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $description = '';
 
-    /**
-     * start_date
-     *
-     * @var int
-     * @validate NotEmpty
-     */
-    protected $startDate = '';
+    /** @var string */
+    var $freq = '';
+    /** @var int */
+    var $until;
+    /** @var int */
+    var $cnt;
 
-    /**
-     * start_date
-     *
-     * @var int
-     * @validate NotEmpty
-     */
-    protected $startTime = '';
+    /** @var string */
+    var $byday;
+    /** @var string */
+    var $bymonthday;
+    /** @var string */
+    var $bymonth;
+
+    /** @var int */
+    var $intrval;
+
+    /** @var string */
+    var $rdate;
+
+    /** @var string */
+    var $rdate_type;
 
     /**
      * organizer
@@ -282,35 +289,148 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->uid = $uid;
     }
 
+
+    /**
+     * @return string
+     */
+    public function getFreq(): string
+    {
+        return $this->freq;
+    }
+
+    /**
+     * @param string $freq
+     */
+    public function setFreq(string $freq): void
+    {
+        $this->freq = $freq;
+    }
+
     /**
      * @return int
      */
-    public function getStartDate(): int
+    public function getUntil(): int
     {
-        return $this->startDate;
+        return $this->until;
     }
 
     /**
-     * @param int $start_date
+     * @param int $until
      */
-    public function setStartDate(int $startDate): void
+    public function setUntil(int $until): void
     {
-        $this->startDate = $startDate;
+        $this->until = $until;
     }
 
     /**
      * @return int
      */
-    public function getStartTime(): int
+    public function getCnt(): int
     {
-        return $this->startTime;
+        return $this->cnt;
     }
 
     /**
-     * @param int $start_time
+     * @param int $cnt
      */
-    public function setStartTime(int $startTime): void
+    public function setCnt(int $cnt): void
     {
-        $this->startTime = $startTime;
+        $this->cnt = $cnt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getByday(): string
+    {
+        return $this->byday;
+    }
+
+    /**
+     * @param string $byday
+     */
+    public function setByday(string $byday): void
+    {
+        $this->byday = $byday;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBymonthday(): string
+    {
+        return $this->bymonthday;
+    }
+
+    /**
+     * @param string $bymonthday
+     */
+    public function setBymonthday(string $bymonthday): void
+    {
+        $this->bymonthday = $bymonthday;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBymonth(): string
+    {
+        return $this->bymonth;
+    }
+
+    /**
+     * @param string $bymonth
+     */
+    public function setBymonth(string $bymonth): void
+    {
+        $this->bymonth = $bymonth;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIntrval(): int
+    {
+        return $this->intrval;
+    }
+
+    /**
+     * @param int $intrval
+     */
+    public function setIntrval(int $intrval): void
+    {
+        $this->intrval = $intrval;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRdate(): string
+    {
+        return $this->rdate;
+    }
+
+    /**
+     * @param string $rdate
+     */
+    public function setRdate(string $rdate): void
+    {
+        $this->rdate = $rdate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRdateType(): string
+    {
+        return $this->rdate_type;
+    }
+
+    /**
+     * @param string $rdate_type
+     */
+    public function setRdateType(string $rdate_type): void
+    {
+        $this->rdate_type = $rdate_type;
     }
 }

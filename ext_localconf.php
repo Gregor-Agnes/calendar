@@ -64,5 +64,18 @@ call_user_func(
     }
 );
 
+
+// Hooks for saving / updating events
 $GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['cal'] = 'Zwo3\\Calendar\\Hook\\TCEmainHook';
 $GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['cal'] = 'Zwo3\\Calendar\\Hook\\TCEmainHook';
+
+
+//Scheduler Task for the Recurrence Index
+
+// Add caching framework garbage collection task
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Zwo3\Calendar\Task\CreateRecurrenceIndex::class] = array(
+    'extension' => $_EXTKEY,
+    'title' => 'Create Recurrence Index for new Calendar',
+    'description' => 'Creates the Recurrence Index'
+
+);
