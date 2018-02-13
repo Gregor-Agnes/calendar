@@ -27,20 +27,20 @@
 			<trans-unit id="tx_cal_organizer.tx_extbase_type.Tx_Calendar_Organizer">
 				<source>calendar Organizer</source>
 			</trans-unit>
-			<trans-unit id="tx_calendar_domain_model_exceptonevent">
-				<source>Excepton Event</source>
+			<trans-unit id="tx_calendar_domain_model_exceptionevent">
+				<source>Exception Event</source>
 			</trans-unit>
-			<trans-unit id="tx_calendar_domain_model_exceptonevent.title">
+			<trans-unit id="tx_calendar_domain_model_exceptionevent.title">
 				<source>Title</source>
 			</trans-unit>
-			<trans-unit id="tx_calendar_domain_model_exceptonevent.start_date">
+			<trans-unit id="tx_calendar_domain_model_exceptionevent.start_date">
 				<source>Start Date</source>
 			</trans-unit>
-			<trans-unit id="tx_calendar_domain_model_exceptonevent.stop_date">
+			<trans-unit id="tx_calendar_domain_model_exceptionevent.stop_date">
 				<source>Stop Date</source>
 			</trans-unit>
-			<trans-unit id="tx_cal_exception_event.tx_extbase_type.Tx_Calendar_ExceptonEvent">
-				<source>calendar ExceptonEvent</source>
+			<trans-unit id="tx_cal_exception_event.tx_extbase_type.Tx_Calendar_ExceptionEvent">
+				<source>calendar ExceptionEvent</source>
 			</trans-unit>
 			<trans-unit id="tx_calendar_domain_model_exceptioneventgroup">
 				<source>Exception Event Group</source>

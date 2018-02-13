@@ -6,17 +6,17 @@ namespace Zwo3\Calendar\Tests\Unit\Domain\Model;
  *
  * @author Gregor Agnes <ga@zwo3.de>
  */
-class ExceptonEventTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class ExceptionEventTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
     /**
-     * @var \Zwo3\Calendar\Domain\Model\ExceptonEvent
+     * @var \Zwo3\Calendar\Domain\Model\ExceptionEvent
      */
     protected $subject = null;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->subject = new \Zwo3\Calendar\Domain\Model\ExceptonEvent();
+        $this->subject = new \Zwo3\Calendar\Domain\Model\ExceptionEvent();
     }
 
     protected function tearDown()

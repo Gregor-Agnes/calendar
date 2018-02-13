@@ -13,6 +13,12 @@ CREATE TABLE tx_cal_event (
  INDEX `stop` (`stop`)
 );
 
+CREATE TABLE tx_cal_exception_event_mm (
+	sorting_foreign int(11) DEFAULT '0' NOT NULL,
+);
+
+Cr
+
 CREATE TABLE tx_cal_index (
 	start DATETIME DEFAULT NULL NULL,
 	stop DATETIME DEFAULT NULL NULL,
@@ -73,19 +79,6 @@ CREATE TABLE tx_cal_event (
 	categories int(11) unsigned DEFAULT '0' NOT NULL,
 );
 
-#
-# Table structure for table 'tx_calendar_event_exceptioneventgroup_mm'
-#
-CREATE TABLE tx_calendar_event_exceptioneventgroup_mm (
-	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
-	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-	sorting int(11) unsigned DEFAULT '0' NOT NULL,
-	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-
-	PRIMARY KEY (uid_local,uid_foreign),
-	KEY uid_local (uid_local),
-	KEY uid_foreign (uid_foreign)
-);
 
 #
 # Table structure for table 'tx_cal_organizer'
@@ -101,16 +94,3 @@ CREATE TABLE tx_cal_exception_event (
 	categories int(11) unsigned DEFAULT '0' NOT NULL,
 );
 
-#
-# Table structure for table 'tx_calendar_exceptioneventgroup_exceptonevent_mm'
-#
-CREATE TABLE tx_calendar_exceptioneventgroup_exceptonevent_mm (
-	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
-	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-	sorting int(11) unsigned DEFAULT '0' NOT NULL,
-	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
-
-	PRIMARY KEY (uid_local,uid_foreign),
-	KEY uid_local (uid_local),
-	KEY uid_foreign (uid_foreign)
-);

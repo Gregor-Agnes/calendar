@@ -27,7 +27,7 @@ class ExceptionEventGroupTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @test
      */
-    public function getExceptionEventReturnsInitialValueForExceptonEvent()
+    public function getExceptionEventReturnsInitialValueForExceptionEvent()
     {
         $newObjectStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         self::assertEquals(
@@ -39,9 +39,9 @@ class ExceptionEventGroupTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     /**
      * @test
      */
-    public function setExceptionEventForObjectStorageContainingExceptonEventSetsExceptionEvent()
+    public function setExceptionEventForObjectStorageContainingExceptionEventSetsExceptionEvent()
     {
-        $exceptionEvent = new \Zwo3\Calendar\Domain\Model\ExceptonEvent();
+        $exceptionEvent = new \Zwo3\Calendar\Domain\Model\ExceptionEvent();
         $objectStorageHoldingExactlyOneExceptionEvent = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $objectStorageHoldingExactlyOneExceptionEvent->attach($exceptionEvent);
         $this->subject->setExceptionEvent($objectStorageHoldingExactlyOneExceptionEvent);
@@ -58,7 +58,7 @@ class ExceptionEventGroupTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function addExceptionEventToObjectStorageHoldingExceptionEvent()
     {
-        $exceptionEvent = new \Zwo3\Calendar\Domain\Model\ExceptonEvent();
+        $exceptionEvent = new \Zwo3\Calendar\Domain\Model\ExceptionEvent();
         $exceptionEventObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
             ->setMethods(['attach'])
             ->disableOriginalConstructor()
@@ -75,7 +75,7 @@ class ExceptionEventGroupTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function removeExceptionEventFromObjectStorageHoldingExceptionEvent()
     {
-        $exceptionEvent = new \Zwo3\Calendar\Domain\Model\ExceptonEvent();
+        $exceptionEvent = new \Zwo3\Calendar\Domain\Model\ExceptionEvent();
         $exceptionEventObjectStorageMock = $this->getMockBuilder(\TYPO3\CMS\Extbase\Persistence\ObjectStorage::class)
             ->setMethods(['detach'])
             ->disableOriginalConstructor()

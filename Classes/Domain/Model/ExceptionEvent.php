@@ -13,9 +13,9 @@ namespace Zwo3\Calendar\Domain\Model;
  ***/
 
 /**
- * ExceptonEvent
+ * ExceptionEvent
  */
-class ExceptonEvent extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class ExceptionEvent extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * title

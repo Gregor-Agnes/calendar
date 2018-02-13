@@ -144,7 +144,7 @@
                     "_default4_delete": false,
                     "customActions": []
                 },
-                "name": "ExceptonEvent",
+                "name": "ExceptionEvent",
                 "objectsettings": {
                     "addDeletedField": true,
                     "addHiddenField": true,

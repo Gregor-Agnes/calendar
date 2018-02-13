@@ -15,7 +15,7 @@ config.tx_extbase {
 				}
 			}
 
-			Zwo3\Calendar\Domain\Model\ExceptonEvent {
+			Zwo3\Calendar\Domain\Model\ExceptionEvent {
 				mapping {
 					tableName = tx_cal_exception_event
 					recordType = 0

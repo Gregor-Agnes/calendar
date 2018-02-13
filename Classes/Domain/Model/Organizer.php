@@ -23,7 +23,7 @@ class Organizer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var string
      * @validate NotEmpty
      */
-    protected $title = '';
+    protected $name = '';
 
     /**
      * Returns the title
@@ -32,7 +32,7 @@ class Organizer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getTitle()
     {
-        return $this->title;
+        return $this->name;
     }
 
     /**
@@ -43,6 +43,6 @@ class Organizer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->name = $title;
     }
 }

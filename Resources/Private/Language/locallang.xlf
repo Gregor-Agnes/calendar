@@ -21,16 +21,16 @@
 			<trans-unit id="tx_calendar_domain_model_organizer.title">
 				<source>Title</source>
 			</trans-unit>
-			<trans-unit id="tx_calendar_domain_model_exceptonevent">
-				<source>Excepton Event</source>
+			<trans-unit id="tx_calendar_domain_model_exceptionevent">
+				<source>Exceptoon Event</source>
 			</trans-unit>
-			<trans-unit id="tx_calendar_domain_model_exceptonevent.title">
+			<trans-unit id="tx_calendar_domain_model_exceptionevent.title">
 				<source>Title</source>
 			</trans-unit>
-			<trans-unit id="tx_calendar_domain_model_exceptonevent.start_date">
+			<trans-unit id="tx_calendar_domain_model_exceptionevent.start_date">
 				<source>Start Date</source>
 			</trans-unit>
-			<trans-unit id="tx_calendar_domain_model_exceptonevent.stop_date">
+			<trans-unit id="tx_calendar_domain_model_exceptionevent.stop_date">
 				<source>Stop Date</source>
 			</trans-unit>
 			<trans-unit id="tx_calendar_domain_model_exceptioneventgroup">

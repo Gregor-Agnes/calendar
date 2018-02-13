@@ -13,6 +13,7 @@ namespace Zwo3\Calendar\Domain\Model;
  ***/
 
 use Carbon\Carbon;
+use DateTime;
 
 /**
  * Event
@@ -34,7 +35,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var int
      * @validate NotEmpty
      */
-    protected $cruser_id;
+    protected $cruserId;
 
     /**
      * crdate
@@ -69,27 +70,159 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $description = '';
 
     /** @var string */
-    var $freq = '';
+    protected $freq = '';
     /** @var int */
-    var $until;
+    protected $until;
     /** @var int */
-    var $cnt;
+    protected $cnt;
 
     /** @var string */
-    var $byday;
+    protected $byday;
     /** @var string */
-    var $bymonthday;
+    protected $bymonthday;
     /** @var string */
-    var $bymonth;
+    protected $bymonth;
 
     /** @var int */
-    var $intrval;
+    protected $intrval;
 
     /** @var string */
-    var $rdate;
+    protected $rdate;
 
     /** @var string */
-    var $rdate_type;
+    protected $rdateType;
+
+    /** @var int */
+    protected $allday;
+
+    /** @var string */
+    protected $timezone;
+
+    /** @var int */
+    protected $calendarId;
+
+    /** @var int */
+    protected $categoryId;
+
+    /** @var int */
+    protected $organizerId;
+
+    /** @var int */
+    protected $locationId;
+
+    /** @var int */
+    protected $organizerPid;
+
+    /** @var string */
+    protected $organizerLink;
+
+    /** @var string */
+    protected $location;
+
+    /** @var int */
+    protected $locationPid;
+
+    /** @var string */
+    protected $locationLink;
+
+    /** @var string */
+    protected $teaser;
+
+    /** @var int */
+    protected $monitorCnt;
+
+    /** @var int */
+    protected $exceptionCnt;
+
+    /** @var int */
+    protected $feCruserId;
+
+    /** @var int */
+    protected $feCrgroupId;
+
+    /** @var int */
+    protected $sharedUserCnt;
+
+    /** @var int */
+    protected $type;
+
+    /** @var int */
+    protected $page;
+
+    /** @var string */
+    protected $extUrl;
+
+    /** @var int */
+    protected $isTemp;
+
+    /** @var string */
+    protected $icsUid;
+
+    /** @var string */
+    protected $image;
+
+    /** @var string */
+    protected $imagecaption;
+
+    /** @var string */
+    protected $imagealttext;
+
+    /** @var string */
+    protected $imagetitletext;
+
+    /** @var string */
+    protected $attachment;
+
+    /** @var string */
+    protected $attachmentcaption;
+
+    /** @var int */
+    protected $refEventId;
+
+    /** @var int */
+    protected $sendInvitation;
+
+    /** @var string */
+    protected $attendee;
+
+    /** @var string */
+    protected $status;
+
+    /** @var int */
+    protected $priority;
+
+    /** @var int */
+    protected $completed;
+
+    /** @var int */
+    protected $noAutoPb;
+
+    /** @var string */
+    protected $txZ3calfieldsFees;
+
+    /** @var string */
+    protected $txZ3calfieldsContact;
+
+    /** @var int */
+    protected $deviation;
+
+
+
+    /** @var int */
+    protected $categories;
+
+    /** @var int */
+    protected $sorting;
+
+    /** @var string */
+    protected $start;
+
+    /** @var string */
+    protected $stop;
+
+
+
+
 
     /**
      * organizer
@@ -99,22 +232,13 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $organizer = null;
 
-    /**
-     * startValue
-     *
-     * @var string
-     * @validate NotEmpty
-     */
-    protected $start;
-
-/** @var string */
-    protected $stop;
+    #/** @var int */
+    #protected $exception_event_group;
 
     /**
-     * exceptionEventGroup
+     * exceptionEventGroups
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Calendar\Domain\Model\ExceptionEventGroup>
-     * @lazy
      */
     protected $exceptionEventGroup = null;
 
@@ -207,7 +331,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the exceptionEventGroup
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Calendar\Domain\Model\ExceptionEventGroup> $exceptionEventGroup
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Calendar\Domain\Model\ExceptionEventGroup> $exceptionEventGroups
      */
     public function getExceptionEventGroup()
     {
@@ -215,7 +339,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Sets the exceptionEventGroup
+     * Sets the exceptionEventGroups
      *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Calendar\Domain\Model\ExceptionEventGroup> $exceptionEventGroup
      * @return void
@@ -226,7 +350,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getStop()
     {
@@ -234,19 +358,19 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @param mixed $stop
+     * @param string $stop
      */
-    public function setStop($stop): void
+    public function setStop(string $stop): void
     {
         $this->stop = $stop;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStart(): string
+    public function getStart()
     {
-        return Carbon::createFromFormat('Ymd', $this->getStartDate())->addSeconds($this->getStartTime());
+        return $this->start;
     }
 
     /**
@@ -433,4 +557,661 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->rdate_type = $rdate_type;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAllday()
+    {
+        return $this->allday;
+    }
+
+    /**
+     * @param mixed $allday
+     */
+    public function setAllday($allday): void
+    {
+        $this->allday = $allday;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCalendarId(): int
+    {
+        return $this->calendar_id;
+    }
+
+    /**
+     * @param int $calendar_id
+     */
+    public function setCalendarId(int $calendar_id): void
+    {
+        $this->calendar_id = $calendar_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezone(): string
+    {
+        return $this->timezone;
+    }
+
+    /**
+     * @param string $timezone
+     */
+    public function setTimezone(string $timezone): void
+    {
+        $this->timezone = $timezone;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): int
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * @param int $category_id
+     */
+    public function setCategoryId(int $category_id): void
+    {
+        $this->category_id = $category_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrganizerLink(): string
+    {
+        return $this->organizer_link;
+    }
+
+    /**
+     * @param string $organizer_link
+     */
+    public function setOrganizerLink(string $organizer_link): void
+    {
+        $this->organizer_link = $organizer_link;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrganizerId(): int
+    {
+        return $this->organizerId;
+    }
+
+    /**
+     * @param int $organizerId
+     */
+    public function setOrganizerId(int $organizerId): void
+    {
+        $this->organizerId = $organizerId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLocationId(): int
+    {
+        return $this->locationId;
+    }
+
+    /**
+     * @param int $locationId
+     */
+    public function setLocationId(int $locationId): void
+    {
+        $this->locationId = $locationId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrganizerPid(): int
+    {
+        return $this->organizerPid;
+    }
+
+    /**
+     * @param int $organizerPid
+     */
+    public function setOrganizerPid(int $organizerPid): void
+    {
+        $this->organizerPid = $organizerPid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     */
+    public function setLocation(string $location): void
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLocationPid(): int
+    {
+        return $this->locationPid;
+    }
+
+    /**
+     * @param int $locationPid
+     */
+    public function setLocationPid(int $locationPid): void
+    {
+        $this->locationPid = $locationPid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocationLink(): string
+    {
+        return $this->locationLink;
+    }
+
+    /**
+     * @param string $locationLink
+     */
+    public function setLocationLink(string $locationLink): void
+    {
+        $this->locationLink = $locationLink;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMonitorCnt(): int
+    {
+        return $this->monitorCnt;
+    }
+
+    /**
+     * @param int $monitorCnt
+     */
+    public function setMonitorCnt(int $monitorCnt): void
+    {
+        $this->monitorCnt = $monitorCnt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExceptionCnt(): int
+    {
+        return $this->exceptionCnt;
+    }
+
+    /**
+     * @param int $exceptionCnt
+     */
+    public function setExceptionCnt(int $exceptionCnt): void
+    {
+        $this->exceptionCnt = $exceptionCnt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFeCruserId(): int
+    {
+        return $this->feCruserId;
+    }
+
+    /**
+     * @param int $feCruserId
+     */
+    public function setFeCruserId(int $feCruserId): void
+    {
+        $this->feCruserId = $feCruserId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFeCrgroupId(): int
+    {
+        return $this->feCrgroupId;
+    }
+
+    /**
+     * @param int $feCrgroupId
+     */
+    public function setFeCrgroupId(int $feCrgroupId): void
+    {
+        $this->feCrgroupId = $feCrgroupId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSharedUserCnt(): int
+    {
+        return $this->sharedUserCnt;
+    }
+
+    /**
+     * @param int $sharedUserCnt
+     */
+    public function setSharedUserCnt(int $sharedUserCnt): void
+    {
+        $this->sharedUserCnt = $sharedUserCnt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param int $type
+     */
+    public function setType(int $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPage(): int
+    {
+        return $this->page;
+    }
+
+    /**
+     * @param int $page
+     */
+    public function setPage(int $page): void
+    {
+        $this->page = $page;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtUrl(): string
+    {
+        return $this->extUrl;
+    }
+
+    /**
+     * @param string $extUrl
+     */
+    public function setExtUrl(string $extUrl): void
+    {
+        $this->extUrl = $extUrl;
+    }
+
+    /**
+     * @return int
+     */
+    public function getisTemp(): int
+    {
+        return $this->isTemp;
+    }
+
+    /**
+     * @param int $isTemp
+     */
+    public function setIsTemp(int $isTemp): void
+    {
+        $this->isTemp = $isTemp;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcsUid(): string
+    {
+        return $this->icsUid;
+    }
+
+    /**
+     * @param string $icsUid
+     */
+    public function setIcsUid(string $icsUid): void
+    {
+        $this->icsUid = $icsUid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImagecaption(): string
+    {
+        return $this->imagecaption;
+    }
+
+    /**
+     * @param string $imagecaption
+     */
+    public function setImagecaption(string $imagecaption): void
+    {
+        $this->imagecaption = $imagecaption;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImagealttext(): string
+    {
+        return $this->imagealttext;
+    }
+
+    /**
+     * @param string $imagealttext
+     */
+    public function setImagealttext(string $imagealttext): void
+    {
+        $this->imagealttext = $imagealttext;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImagetitletext(): string
+    {
+        return $this->imagetitletext;
+    }
+
+    /**
+     * @param string $imagetitletext
+     */
+    public function setImagetitletext(string $imagetitletext): void
+    {
+        $this->imagetitletext = $imagetitletext;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachment(): string
+    {
+        return $this->attachment;
+    }
+
+    /**
+     * @param string $attachment
+     */
+    public function setAttachment(string $attachment): void
+    {
+        $this->attachment = $attachment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachmentcaption(): string
+    {
+        return $this->attachmentcaption;
+    }
+
+    /**
+     * @param string $attachmentcaption
+     */
+    public function setAttachmentcaption(string $attachmentcaption): void
+    {
+        $this->attachmentcaption = $attachmentcaption;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRefEventId(): int
+    {
+        return $this->refEventId;
+    }
+
+    /**
+     * @param int $refEventId
+     */
+    public function setRefEventId(int $refEventId): void
+    {
+        $this->refEventId = $refEventId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSendInvitation(): int
+    {
+        return $this->sendInvitation;
+    }
+
+    /**
+     * @param int $sendInvitation
+     */
+    public function setSendInvitation(int $sendInvitation): void
+    {
+        $this->sendInvitation = $sendInvitation;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttendee(): string
+    {
+        return $this->attendee;
+    }
+
+    /**
+     * @param string $attendee
+     */
+    public function setAttendee(string $attendee): void
+    {
+        $this->attendee = $attendee;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param int $priority
+     */
+    public function setPriority(int $priority): void
+    {
+        $this->priority = $priority;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCompleted(): int
+    {
+        return $this->completed;
+    }
+
+    /**
+     * @param int $completed
+     */
+    public function setCompleted(int $completed): void
+    {
+        $this->completed = $completed;
+    }
+
+    /**
+     * @return int
+     */
+    public function getT3verOid(): int
+    {
+        return $this->t3verOid;
+    }
+
+    /**
+     * @param int $t3verOid
+     */
+    public function setT3verOid(int $t3verOid): void
+    {
+        $this->t3verOid = $t3verOid;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNoAutoPb(): int
+    {
+        return $this->noAutoPb;
+    }
+
+    /**
+     * @param int $noAutoPb
+     */
+    public function setNoAutoPb(int $noAutoPb): void
+    {
+        $this->noAutoPb = $noAutoPb;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTxZ3calfieldsFees(): string
+    {
+        return $this->txZ3calfieldsFees;
+    }
+
+    /**
+     * @param string $txZ3calfieldsFees
+     */
+    public function setTxZ3calfieldsFees(string $txZ3calfieldsFees): void
+    {
+        $this->txZ3calfieldsFees = $txZ3calfieldsFees;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTxZ3calfieldsContact(): string
+    {
+        return $this->txZ3calfieldsContact;
+    }
+
+    /**
+     * @param string $txZ3calfieldsContact
+     */
+    public function setTxZ3calfieldsContact(string $txZ3calfieldsContact): void
+    {
+        $this->txZ3calfieldsContact = $txZ3calfieldsContact;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeviation(): int
+    {
+        return $this->deviation;
+    }
+
+    /**
+     * @param int $deviation
+     */
+    public function setDeviation(int $deviation): void
+    {
+        $this->deviation = $deviation;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategories(): int
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param int $categories
+     */
+    public function setCategories(int $categories): void
+    {
+        $this->categories = $categories;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSorting(): int
+    {
+        return $this->sorting;
+    }
+
+    /**
+     * @param int $sorting
+     */
+    public function setSorting(int $sorting): void
+    {
+        $this->sorting = $sorting;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTeaser(): string
+    {
+        return $this->teaser;
+    }
+
+    /**
+     * @param string $teaser
+     */
+    public function setTeaser(string $teaser): void
+    {
+        $this->teaser = $teaser;
+    }
+
 }
