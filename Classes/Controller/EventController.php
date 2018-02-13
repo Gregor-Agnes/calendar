@@ -34,7 +34,7 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
-        $events = $this->eventRepository->findAll(false);
+        $events = $this->eventRepository->findAll();
 
 
         $this->view->assign('events', $events);

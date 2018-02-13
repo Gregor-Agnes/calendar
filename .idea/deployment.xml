@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" promptOnRemoteOverwrite="CHECK_TIMESTAMP" serverName="kirchenkreis-lokal" autoUploadExternalChanges="true" notifyRemoteChanges="true">
+  <component name="PublishConfigData" autoUpload="Always" promptOnRemoteOverwrite="CHECK_TIMESTAMP" serverName="kirchenkreis-aachen.z3" autoUploadExternalChanges="true" notifyRemoteChanges="true">
     <serverData>
+      <paths name="BIV 2013 (p200293.typo3server.info)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="agfk-bw.de 2017">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="alte-windkunst.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="amaryllis-bonn.de">
         <serverdata>
           <mappings>
@@ -17,6 +38,27 @@
         </serverdata>
       </paths>
       <paths name="aqua-programm.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="astrologiezentrumkoeln.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="awo-ehrenfeld.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="awo-suedstadt.de">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -44,7 +86,28 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="bergdata.com">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="besser-autokaufen.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="cleanair ubuntu">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="clöer.de">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -65,7 +128,7 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="drupal.p267389.mittwaldserver.info">
+      <paths name="druckerei-brandt.de">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -79,6 +142,20 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="dynos-gmbh.de 2018">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ebs-koeln.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="ekasur.de">
         <serverdata>
           <mappings>
@@ -86,7 +163,42 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="ekasur.web-republic.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="elfin">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="entwicklungsdienst.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="entwicklungsdienst.z3">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ev-kirche-9kirchen.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="fahrradland-bw.de alt">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -121,6 +233,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="fmsgmbh.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="fruchtwein.org">
         <serverdata>
           <mappings>
@@ -128,7 +247,14 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="ftp.comnet.de">
+      <paths name="ftp.kinder-jugendhilfe-overath.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="gebaeudereinger.de">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -149,6 +275,20 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="heidbrink-sprechfunk.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="heilwasser-ratgeber.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="hundeschule-bornheim.de">
         <serverdata>
           <mappings>
@@ -163,7 +303,28 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="ifhe.z3">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="intranet.yit.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="invenio ftps">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="kinder-jugendhilfe-overath.de">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -177,10 +338,24 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="kirchenkreis-lokal">
+      <paths name="kirchenkreis-aachen.z3">
         <serverdata>
           <mappings>
             <mapping deploy="web\typo3conf\ext\calendar" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="kirchner ifland">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="klingelts-bw.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
@@ -212,6 +387,20 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="landmann-training.de [mittwald]">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="localhost">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="logopaedieteambonn.de">
         <serverdata>
           <mappings>
@@ -233,6 +422,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="oberhaeuser-druck.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="p168498.typo3server.info (mieterbund-nrw)">
         <serverdata>
           <mappings>
@@ -247,7 +443,14 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="p200293.typo3server.info BIV Gebäudereiniger">
+      <paths name="p199280.typo3server.info (recy mittwald)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="p223852.webspaceconfig.de">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -255,6 +458,13 @@
         </serverdata>
       </paths>
       <paths name="perinatalerfassung.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="perspektive-demenz.de">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -275,6 +485,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="relaunch-2017.ifhe.org">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="richcontent.de">
         <serverdata>
           <mappings>
@@ -289,7 +506,28 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="sfb-tr84.z3">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="stimm-profil.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="storch-und-co.de">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="synergist.works">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -310,7 +548,7 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="typozwo3.de">
+      <paths name="vcd-portal.z3">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -324,14 +562,21 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="viandenkeck.de">
+      <paths name="vcd.org (vcd alter Server)">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
-      <paths name="webserver03.exposervices.de">
+      <paths name="vertigo-systems.de (alvred.de)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="viandenkeck.de">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -346,6 +591,13 @@
         </serverdata>
       </paths>
       <paths name="www.fm-die-moeglichmacher.de headis_game">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="www.ifhe.org/ifhem/">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
