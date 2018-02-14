@@ -8,6 +8,20 @@ config.tx_extbase {
 				}
 			}
 
+			Zwo3\Calendar\Domain\Model\Calendar {
+				mapping {
+					tableName = tx_cal_calendar
+					recordType = 0
+				}
+			}
+
+			Zwo3\Calendar\Domain\Model\Category {
+				mapping {
+					tableName = tx_cal_category
+					recordType = 0
+				}
+			}
+
 			Zwo3\Calendar\Domain\Model\Organizer {
 				mapping {
 					tableName = tx_cal_organizer

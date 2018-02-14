@@ -211,6 +211,8 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /** @var int */
     protected $categories;
 
+
+
     /** @var int */
     protected $sorting;
 
@@ -220,10 +222,6 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /** @var string */
     protected $stop;
 
-
-
-
-
     /**
      * organizer
      *
@@ -231,6 +229,23 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @lazy
      */
     protected $organizer = null;
+
+    /**
+     * calendar
+     *
+     * @var \Zwo3\Calendar\Domain\Model\Calendar
+     * @lazy
+     */
+    protected $calendar = null;
+
+
+    /**
+     * category
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Test1\Domain\Model\Category>
+     */
+    protected $category = null;
+
 
     #/** @var int */
     #protected $exception_event_group;
@@ -262,6 +277,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects()
     {
         $this->exceptionEventGroup = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->category = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     /**
@@ -1212,6 +1228,38 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setTeaser(string $teaser): void
     {
         $this->teaser = $teaser;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return Calendar
+     */
+    public function getCalendar()
+    {
+        return $this->calendar;
+    }
+
+    /**
+     * @param Calendar $calendar
+     */
+    public function setCalendar($calendar)
+    {
+        $this->calendar = $calendar;
     }
 
 }

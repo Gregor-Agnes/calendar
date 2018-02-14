@@ -25,7 +25,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
 	</tr>
 
 	<f:for each="{events}" as="event">
-		<f:debug>{event.exceptionEventGroup}</f:debug>
 		<tr>
 			<td><f:link.action action="show" arguments="{event : event}" pluginName="Events"> {event.title}</f:link.action></td>
 			<td>{event.start}</td>

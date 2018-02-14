@@ -21,12 +21,21 @@ use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\IntegerConverter;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+use Zwo3\Calendar\Domain\Model\Event;
 
 /**
  * The repository for Events
  */
 class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
+
+    /**
+     * exceptionEventGroupRepository
+     *
+     * @var \Zwo3\Calendar\Domain\Repository\ExceptionEventGroupRepository
+     * @inject
+     */
+    protected $exceptionEventGroupRepository = null;
 
     /**
      * @var array
@@ -51,7 +60,7 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     }
 
 
-    public function findAll()
+    public function findAll__()
     {
 
 
@@ -68,34 +77,35 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAll__($withRecurrence = true, $maxResults = 20)
+    public function findAll($withRecurrence = true, $maxResults = 20)
     {
 
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_event');
 
         $queryBuilder
-            ->add('select', 'tx_cal_event.* ,GROUP_CONCAT(ex_eg.uid) AS exceptionEventGroup')
-            ->groupBy('tx_cal_event.uid')
-            ->from('tx_cal_event')
+            ->add('select', 'event.* ,GROUP_CONCAT(ex_eg.uid) AS exceptionEventGroup, CAST(category_id AS CHAR) category_id')
+            ->groupBy('event.uid')
+            ->from('tx_cal_event', 'event')
             ->where(
-                ('tx_cal_event.start > ' . Carbon::now()->toDateString())
-            );
+                ('event.start > "' . Carbon::now()->toDateTimeString() . '"')
+            )
+        ;
         if ($withRecurrence) {
-            $queryBuilder->rightJoin(
-                'tx_cal_event',
+            $queryBuilder->leftJoin(
+                'event',
                 'tx_cal_index',
                 'index',
-                $queryBuilder->expr()->eq('index.event_uid', $queryBuilder->quoteIdentifier('tx_cal_event.uid'))
+                $queryBuilder->expr()->eq('index.event_uid', $queryBuilder->quoteIdentifier('event.uid'))
             );
         }
-        $queryBuilder->join(
-            'tx_cal_event',
+        $queryBuilder->leftJoin(
+            'event',
             'tx_cal_exception_event_mm',
             'ex_mm',
-            $queryBuilder->expr()->eq('tx_cal_event.uid', $queryBuilder->quoteIdentifier('ex_mm.uid_local'))
+            $queryBuilder->expr()->eq('event.uid', $queryBuilder->quoteIdentifier('ex_mm.uid_local'))
         );
-        $queryBuilder->join(
+        $queryBuilder->leftJoin(
             'ex_mm',
             'tx_cal_exception_event_group',
             'ex_eg',
@@ -106,8 +116,10 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         }
         $eventsArray = $queryBuilder->execute()->fetchAll();
 
-        #DebuggerUtility::var_dump($eventsArray);
         #$eventsArray = $queryBuilder->getSQL();
+        DebuggerUtility::var_dump($eventsArray);
+
+
 
         // Array values mappen -> Event
         /** @var \TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration $mappingConfiguration */
@@ -147,12 +159,12 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 'exception_event_group'
             ])
             ->skipUnknownProperties()
-            ->setMapping('calendar_id', 'calendarId')
-            ->setMapping('category_id', 'categoryId')
+            ->setMapping('calendar_id', 'calendar')
+            ->setMapping('category_id', 'category')
             ->setMapping('organizer_id', 'organizer')
             ->setMapping('organizer_pid', 'organizerPid')
             ->setMapping('organizer_link', 'organizerLink')
-            ->setMapping('location_id', 'locationId')
+            ->setMapping('location_id', 'location')
             ->setMapping('location_pid', 'locationPid')
             ->setMapping('location_link', 'locationLink')
             ->setMapping('rdate_type', 'rdateType')
@@ -174,16 +186,27 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         //DebuggerUtility::var_dump($exceptionEventGroupMappingConfiguration->getTargetPropertyName('exceptionEventGroups'));
         foreach ($eventsArray as $event) {
             //DebuggerUtility::var_dump($event);
-            $events[] = $this->objectManager->get('TYPO3\CMS\Extbase\Property\PropertyMapper')
+            /** @var Event $event */
+            $eventObject = $this->objectManager->get('TYPO3\CMS\Extbase\Property\PropertyMapper')
                 ->convert(
                     $event,
                     'Zwo3\Calendar\Domain\Model\Event',
                     $mappingConfiguration
                 );
+// get the Exception Events
+            $exceptionEventIds = explode(',', $event['exceptionEventGroup']);
+            foreach($exceptionEventIds as $exceptionEventId) {
+
+                $eventObject->getExceptionEventGroup()->attach( $this->exceptionEventGroupRepository->findByUid($exceptionEventId));
+            }
+
+
+
+            $events[] = $eventObject;
         }
+        DebuggerUtility::var_dump($events);
         return $events;
 
-       # DebuggerUtility::var_dump($events);
 
         #return parent::findAll(); // TODO: Change the autogenerated stub
     }
