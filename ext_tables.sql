@@ -17,7 +17,6 @@ CREATE TABLE tx_cal_exception_event_mm (
 	sorting_foreign int(11) DEFAULT '0' NOT NULL,
 );
 
-Cr
 
 CREATE TABLE tx_cal_index (
 	start DATETIME DEFAULT NULL NULL,

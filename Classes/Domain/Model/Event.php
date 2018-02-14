@@ -314,10 +314,10 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the organizer
      *
-     * @param \Zwo3\Calendar\Domain\Model\Organizer $organizer
+     * @param \Zwo3\Calendar\Domain\Model\Organizer|null $organizer
      * @return void
      */
-    public function setOrganizer(\Zwo3\Calendar\Domain\Model\Organizer $organizer)
+    public function setOrganizer(\Zwo3\Calendar\Domain\Model\Organizer $organizer = null)
     {
         $this->organizer = $organizer;
     }

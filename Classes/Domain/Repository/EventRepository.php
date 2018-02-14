@@ -11,8 +11,14 @@ namespace Zwo3\Calendar\Domain\Repository;
 
 use Carbon\Carbon;
 use Doctrine\Common\Persistence\ObjectManager;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\EndTimeRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+use TYPO3\CMS\Core\Database\Query\Restriction\QueryRestrictionInterface;
+use TYPO3\CMS\Core\Database\Query\Restriction\StartTimeRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -77,18 +83,24 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAll($withRecurrence = true, $maxResults = 20)
+    public function findAll($withRecurrence = true, $maxResults = 200)
     {
 
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_event');
+        $queryRestrictionBuilder = $this->objectManager->get(HiddenRestriction::class);
+
+        // TODO move hidden=0 from where to join!
+
+        $queryBuilder->getRestrictions()->removeAll();
+        DebuggerUtility::var_dump($queryBuilder->getRestrictions());
 
         $queryBuilder
-            ->add('select', 'event.* ,GROUP_CONCAT(ex_eg.uid) AS exceptionEventGroup, CAST(category_id AS CHAR) category_id')
+            ->add('select', 'event.* , CAST(category_id AS CHAR) category_id')
             ->groupBy('event.uid')
             ->from('tx_cal_event', 'event')
             ->where(
-                ('event.start > "' . Carbon::now()->toDateTimeString() . '"')
+                ('DATE(event.start) > DATE("' . Carbon::now()->toDateString() . '")')
             )
         ;
         if ($withRecurrence) {
@@ -114,9 +126,10 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         if ($maxResults) {
             $queryBuilder->setMaxResults($maxResults);
         }
-        $eventsArray = $queryBuilder->execute()->fetchAll();
+        $sql = $queryBuilder->getSQL();
+        DebuggerUtility::var_dump($sql);
 
-        #$eventsArray = $queryBuilder->getSQL();
+        $eventsArray = $queryBuilder->execute()->fetchAll();
         DebuggerUtility::var_dump($eventsArray);
 
 
@@ -156,7 +169,8 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 'l18n_diffsource',
                 't3ver_move_id',
                 'l10n_state',
-                'exception_event_group'
+                'exception_event_group',
+                'deviation'
             ])
             ->skipUnknownProperties()
             ->setMapping('calendar_id', 'calendar')
@@ -185,7 +199,7 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         //DebuggerUtility::var_dump($exceptionEventGroupMappingConfiguration->getTargetPropertyName('exceptionEventGroups'));
         foreach ($eventsArray as $event) {
-            //DebuggerUtility::var_dump($event);
+           # DebuggerUtility::var_dump($event);
             /** @var Event $event */
             $eventObject = $this->objectManager->get('TYPO3\CMS\Extbase\Property\PropertyMapper')
                 ->convert(
