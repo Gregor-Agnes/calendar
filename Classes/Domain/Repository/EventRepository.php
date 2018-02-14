@@ -36,6 +36,14 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
 
     /**
+     * exceptionEventRepository
+     *
+     * @var \Zwo3\Calendar\Domain\Repository\ExceptionEventRepository
+     * @inject
+     */
+    protected $exceptionEventRepository = null;
+
+    /**
      * exceptionEventGroupRepository
      *
      * @var \Zwo3\Calendar\Domain\Repository\ExceptionEventGroupRepository
@@ -88,19 +96,17 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_event');
-        $queryRestrictionBuilder = $this->objectManager->get(HiddenRestriction::class);
 
-        // TODO move hidden=0 from where to join!
-
-        $queryBuilder->getRestrictions()->removeAll();
-        DebuggerUtility::var_dump($queryBuilder->getRestrictions());
+        //$queryBuilder->getRestrictions()->removeAll();
+       // DebuggerUtility::var_dump($queryBuilder->getRestrictions());
 
         $queryBuilder
             ->add('select', 'event.* , CAST(category_id AS CHAR) category_id')
             ->groupBy('event.uid')
             ->from('tx_cal_event', 'event')
             ->where(
-                ('DATE(event.start) > DATE("' . Carbon::now()->toDateString() . '")')
+                ('DATE(event.start) > DATE("' . Carbon::now()->toDateString() . '")'),
+                ('freq != "none"')
             )
         ;
         if ($withRecurrence) {
@@ -111,28 +117,12 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $queryBuilder->expr()->eq('index.event_uid', $queryBuilder->quoteIdentifier('event.uid'))
             );
         }
-        $queryBuilder->leftJoin(
-            'event',
-            'tx_cal_exception_event_mm',
-            'ex_mm',
-            $queryBuilder->expr()->eq('event.uid', $queryBuilder->quoteIdentifier('ex_mm.uid_local'))
-        );
-        $queryBuilder->leftJoin(
-            'ex_mm',
-            'tx_cal_exception_event_group',
-            'ex_eg',
-            $queryBuilder->expr()->eq('ex_mm.uid_foreign', $queryBuilder->quoteIdentifier('ex_eg.uid'))
-        );
         if ($maxResults) {
             $queryBuilder->setMaxResults($maxResults);
         }
-        $sql = $queryBuilder->getSQL();
-        DebuggerUtility::var_dump($sql);
+        #$sql = $queryBuilder->getSQL();
 
         $eventsArray = $queryBuilder->execute()->fetchAll();
-        DebuggerUtility::var_dump($eventsArray);
-
-
 
         // Array values mappen -> Event
         /** @var \TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration $mappingConfiguration */
@@ -195,7 +185,7 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             ->setMapping('tx_z3calfields_contact', 'txZ3calfieldsContact')
             //->forProperty('exceptionEventGroup')->setTypeConverterOption()
             ;
-        $exceptionEventGroupMappingConfiguration = $mappingConfiguration->getConfigurationFor('exceptionEventGroup');
+        //$exceptionEventGroupMappingConfiguration = $mappingConfiguration->getConfigurationFor('exceptionEventGroup');
 
         //DebuggerUtility::var_dump($exceptionEventGroupMappingConfiguration->getTargetPropertyName('exceptionEventGroups'));
         foreach ($eventsArray as $event) {
@@ -208,11 +198,48 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                     $mappingConfiguration
                 );
 // get the Exception Events
-            $exceptionEventIds = explode(',', $event['exceptionEventGroup']);
-            foreach($exceptionEventIds as $exceptionEventId) {
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_exception_event');
+            $exceptionEventIds = $queryBuilder
+                ->select('uid_foreign')
+                ->from('tx_cal_exception_event_mm', 'ee_mm')
+                ->where(
+                    $queryBuilder->expr()->eq('uid_local', $event['uid']),
+                    $queryBuilder->expr()->eq('tablenames', '"tx_cal_exception_event"')
+                )
+                ->execute()
+                ->fetchAll();
 
-                $eventObject->getExceptionEventGroup()->attach( $this->exceptionEventGroupRepository->findByUid($exceptionEventId));
+            //DebuggerUtility::var_dump($exceptionEventIds);
+
+            foreach($exceptionEventIds as $exceptionEventId) {
+                $eventObject->getExceptionEvent()->attach( $this->exceptionEventRepository->findByUid($exceptionEventId));
             }
+
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_exception_event_group_mm');
+            $queryBuilder
+                ->select('eeg_mm.uid_foreign')
+                ->from('tx_cal_exception_event_group_mm', 'eeg_mm')
+                ->leftJoin(
+                    'eeg_mm',
+                    'tx_cal_exception_event_mm',
+                    'ee_mm',
+                    'eeg_mm.uid_local = ee_mm.uid_foreign AND ee_mm.tablenames ="tx_cal_exception_event_group"'
+                )
+                ->where(
+                    $queryBuilder->expr()->eq('ee_mm.uid_local', $event['uid'])
+                    //$queryBuilder->expr()->eq('ee_mm.tablenames', '"tx_cal_exception_event_group"')
+                )
+                ;
+            #DebuggerUtility::var_dump($queryBuilder->getSQL());
+            $exceptionEventIds =  $queryBuilder->execute()
+                ->fetchAll();
+
+            foreach($exceptionEventIds as $exceptionEventId) {
+                $eventObject->getExceptionEvent()->attach( $this->exceptionEventRepository->findByUid($exceptionEventId));
+            }
+
+
+            unset($exceptionEventIds);
 
 
 

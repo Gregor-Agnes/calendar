@@ -36,7 +36,7 @@ class ExceptionEvent extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * stopDate
      *
-     * @var \DateTime
+     * @var string
      * @validate NotEmpty
      */
     protected $stopDate = null;

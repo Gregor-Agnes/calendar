@@ -247,15 +247,19 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $category = null;
 
 
-    #/** @var int */
-    #protected $exception_event_group;
-
     /**
-     * exceptionEventGroups
+     * exceptionEventGroup
      *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Calendar\Domain\Model\ExceptionEventGroup>
      */
     protected $exceptionEventGroup = null;
+
+    /**
+     * exceptionEvent
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Calendar\Domain\Model\ExceptionEvent>
+     */
+    protected $exceptionEvent = null;
 
     /**
      * __construct
@@ -277,6 +281,7 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected function initStorageObjects()
     {
         $this->exceptionEventGroup = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->exceptionEvent = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
         $this->category = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
@@ -1260,6 +1265,51 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setCalendar($calendar)
     {
         $this->calendar = $calendar;
+    }
+
+
+
+    /**
+     * Adds a ExceptionEvent
+     *
+     * @param \Zwo3\Calendar\Domain\Model\ExceptionEvent $exceptionEvent
+     * @return void
+     */
+    public function addExceptionEvent(\Zwo3\Calendar\Domain\Model\ExceptionEvent $exceptionEvent)
+    {
+        $this->exceptionEvent->attach($exceptionEvent);
+    }
+
+    /**
+     * Removes a ExceptionEvent
+     *
+     * @param \Zwo3\Calendar\Domain\Model\ExceptionEvent $exceptionEventToRemove The ExceptionEvent to be removed
+     * @return void
+     */
+    public function removeExceptionEvent(\Zwo3\Calendar\Domain\Model\ExceptionEvent $exceptionEventToRemove)
+    {
+        $this->exceptionEvent->detach($exceptionEventToRemove);
+    }
+
+    /**
+     * Returns the exceptionEvent
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Calendar\Domain\Model\ExceptionEvent> $exceptionEvent
+     */
+    public function getExceptionEvent()
+    {
+        return $this->exceptionEvent;
+    }
+
+    /**
+     * Sets the exceptionEvents
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Calendar\Domain\Model\ExceptionEvent> $exceptionEvent
+     * @return void
+     */
+    public function setExceptionEvent(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $exceptionEvent)
+    {
+        $this->exceptionEvent = $exceptionEvent;
     }
 
 }
