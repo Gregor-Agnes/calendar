@@ -91,7 +91,7 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAll($withRecurrence = true, $maxResults = 200)
+    public function findAll($withRecurrence = true, $maxResults = 200000)
     {
 
         /** @var QueryBuilder $queryBuilder */

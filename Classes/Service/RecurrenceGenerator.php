@@ -92,7 +92,9 @@ class RecurrenceGenerator {
             ]);
 
             DebuggerUtility::var_dump($exclusionArray);
-            $rule->setExDates($exclusionArray);
+            if (count($exclusionArray) > 0) {
+                $rule->setExDates($exclusionArray);
+            }
 
             DebuggerUtility::var_dump($rule->getString());
             foreach($this->transformer->transform($rule)->toArray() as $recurrence){
