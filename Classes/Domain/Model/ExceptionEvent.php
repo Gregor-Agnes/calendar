@@ -25,21 +25,22 @@ class ExceptionEvent extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $title = '';
 
+
     /**
      * startDate
      *
-     * @var \DateTime
      * @validate NotEmpty
+     * @var string
      */
-    protected $startDate = null;
+    protected $startDate;
 
     /**
      * stopDate
      *
      * @var string
-     * @validate NotEmpty
      */
-    protected $stopDate = null;
+    protected $stopDate;
+
 
     /**
      * Returns the title
@@ -62,45 +63,38 @@ class ExceptionEvent extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->title = $title;
     }
 
-    /**
-     * Returns the startDate
-     *
-     * @return \DateTime $startDate
-     */
-    public function getStartDate()
-    {
-        return $this->startDate;
-    }
+
 
     /**
-     * Sets the startDate
-     *
-     * @param \DateTime $startDate
-     * @return void
+     * @return string
      */
-    public function setStartDate(\DateTime $startDate)
-    {
-        $this->startDate = $startDate;
-    }
-
-    /**
-     * Returns the stopDate
-     *
-     * @return \DateTime $stopDate
-     */
-    public function getStopDate()
+    public function getStopDate(): string
     {
         return $this->stopDate;
     }
 
     /**
-     * Sets the stopDate
-     *
-     * @param \DateTime $stopDate
-     * @return void
+     * @param string $stopDate
      */
-    public function setStopDate(\DateTime $stopDate)
+    public function setStopDate(string $stopDate): void
     {
         $this->stopDate = $stopDate;
     }
+
+    /**
+     * @return string
+     */
+    public function getStartDate(): string
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param string $startDate
+     */
+    public function setStartDate(string $startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
 }

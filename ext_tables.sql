@@ -57,8 +57,10 @@ CREATE TABLE tx_cal_exception_event (
 
 	title varchar(255) DEFAULT '' NOT NULL,
 	tx_extbase_type varchar(255) DEFAULT '' NOT NULL,
-		start_date date DEFAULT '0000-00-00',
-	stop_date date DEFAULT '0000-00-00'
+	start DATE DEFAULT NULL NULL,
+	stop DATE DEFAULT NULL NULL,
+ INDEX `start` (`start`),
+ INDEX `stop` (`stop`)
 
 );
 

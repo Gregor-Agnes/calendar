@@ -13,7 +13,8 @@ class ext_update
     {
 
         $result = $this->updateTxCalEvent();
-        $result .= $this->updateTxCalIncex();
+        $result .= $this->updateTxCalIndex();
+        $result .= $this->updateTxCalException();
 
         return $result;
 
@@ -33,6 +34,7 @@ class ext_update
             ->update('tx_cal_event')
             ->add(
                 'set',
+                /** @lang SQL */
                 'start = DATE_ADD(CONCAT(SUBSTRING(`start_date`,1,4), \'-\', SUBSTRING(`start_date`,5,2), \'-\', SUBSTRING(`start_date`,7,2)), INTERVAL `start_time` SECOND), stop = DATE_ADD(CONCAT(SUBSTRING(`end_date`,1,4), \'-\', SUBSTRING(`end_date`,5,2), \'-\', SUBSTRING(`end_date`,7,2)), INTERVAL `end_time` SECOND)'
             )
             ->execute();
@@ -43,7 +45,7 @@ class ext_update
     /**
      * @return string
      */
-    protected function updateTxCalIncex() {
+    protected function updateTxCalIndex() {
 // Start und Stop als DateTime
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_index');
 
@@ -60,6 +62,25 @@ stop = CONCAT(SUBSTRING(`end_datetime`,1,4), \'-\', SUBSTRING(`end_datetime`,5,2
             ->execute();
        // return $rows;
         return '<p>' . $rows . ' rows in tx_cal_index have been converted.</p>';
+
+    }
+
+    protected function updateTxCalException()
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_exception_event');
+
+        /** @var QueryBuilder $queryBuilder */
+        $rows = $queryBuilder
+            ->update('tx_cal_exception_event')
+            ->add(
+                'set',
+                /** @lang SQL */
+                'stop_date = CONCAT(SUBSTRING(`until`,1,4), \'-\', SUBSTRING(`until`,5,2), \'-\', SUBSTRING(`until`,7,2))'
+            )
+            ->execute()
+            ;
+        return '<p>' . $rows . ' rows in tx_cal_exception_event have been converted.</p>';
+
 
     }
 }

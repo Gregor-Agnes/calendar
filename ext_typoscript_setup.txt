@@ -33,6 +33,9 @@ config.tx_extbase {
 				mapping {
 					tableName = tx_cal_exception_event
 					recordType = 0
+					columns {
+						stop_date.mapOnProperty = stopDate
+					}
 				}
 			}
 

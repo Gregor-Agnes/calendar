@@ -245,7 +245,7 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
             $events[] = $eventObject;
         }
-        DebuggerUtility::var_dump($events);
+        //DebuggerUtility::var_dump($events);
         return $events;
 
 
