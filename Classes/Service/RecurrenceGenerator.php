@@ -49,7 +49,8 @@ class RecurrenceGenerator {
         // Todo: Es gibt auch Exception-Events mit Recurrences, diese habe ich noch nicht berücksichtigt...
         if ($event->getFreq()) {
             /** @var Rule $rule */
-            $rule = (GeneralUtility::makeInstance(Rule::class))
+            $rule = (GeneralUtility::makeInstance(Rule::class));
+            $rule
                 ->setStartDate(Carbon::parse($event->getStart()))
                 ->setEndDate(Carbon::parse($event->getStop()))
                 ->setTimezone($this->timezone)
@@ -78,7 +79,7 @@ class RecurrenceGenerator {
             foreach($event->getExceptionEvent()->toArray() as $exceptionEvent) {
                 /** @var ExceptionEvent $exceptionEvent */
                 if (Carbon::parse($exceptionEvent->getStartDate())->getTimestamp() > Carbon::parse($rule->getUntil())->getTimestamp()) {
-                    #continue;
+                    continue;
                 }
                 //DebuggerUtility::var_dump($exceptionEvent);
                 if ($exceptionEvent->getStopDate()) {
@@ -93,14 +94,10 @@ class RecurrenceGenerator {
                     $exclusionArray[] = $exceptionEvent->getStartDate();
                 }
             }
-            $rule->setExDates([
-                "2018-02-26"
-            ]);
 
             if (count($exclusionArray) > 0) {
                 $rule->setExDates($exclusionArray);
             }
-
 
             return $this->transformer->transform($rule)->toArray();
         } else {

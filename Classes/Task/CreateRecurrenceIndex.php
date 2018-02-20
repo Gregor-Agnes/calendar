@@ -45,7 +45,7 @@ class CreateRecurrenceIndex extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->eventRepository = $objectManager->get(EventRepository::class);
 
-        $events = $this->eventRepository->findAll(false);
+        $events = $this->eventRepository->findAll();
 
         //DebuggerUtility::var_dump($events);
 
@@ -65,8 +65,8 @@ class CreateRecurrenceIndex extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
                 //DebuggerUtility::var_dump($recurrence);
                 /** @var Recurrence $recurrence */
                 $dataArray[] = [
-                  'start' => $recurrence->getStart()->format('d.m.y H:i:s'),
-                    'stop' => $recurrence->getEnd()->format('d.m.y H:i:s'),
+                  'start' => $recurrence->getStart()->format('Y-m-d H:i:s'),
+                    'stop' => $recurrence->getEnd()->format('Y-m-d H:i:s'),
                     'tablename' => 'tx_cal_event',
                     'event_uid' => $event->getUid()
                 ];
