@@ -50,6 +50,8 @@ class EventController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
+
+        DebuggerUtility::var_dump($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']);
         $events = $this->eventRepository->findAll(false);
 
         /** @var \Zwo3\Calendar\Service\RecurrenceGenerator $recurrenceGenerator */

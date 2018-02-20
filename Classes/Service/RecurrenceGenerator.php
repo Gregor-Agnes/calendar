@@ -38,9 +38,15 @@ class RecurrenceGenerator {
         $this->transformer = new ArrayTransformer();
     }
 
-
-    public function createRecurrencesFromEvent(Event $event) {
-
+    /**
+     * @param Event $event
+     * @throws \Recurr\Exception\InvalidArgument
+     * @throws \Recurr\Exception\InvalidWeekday
+     * @return array
+     */
+    public function createRecurrencesFromEvent(Event $event)
+    {
+        // Todo: Es gibt auch Exception-Events mit Recurrences, diese habe ich noch nicht berücksichtigt...
         if ($event->getFreq()) {
             /** @var Rule $rule */
             $rule = (GeneralUtility::makeInstance(Rule::class))
@@ -74,7 +80,7 @@ class RecurrenceGenerator {
                 if (Carbon::parse($exceptionEvent->getStartDate())->getTimestamp() > Carbon::parse($rule->getUntil())->getTimestamp()) {
                     #continue;
                 }
-                DebuggerUtility::var_dump($exceptionEvent);
+                //DebuggerUtility::var_dump($exceptionEvent);
                 if ($exceptionEvent->getStopDate()) {
                     // it is a range
                     $theDay = Carbon::parse($exceptionEvent->getStartDate());
@@ -91,16 +97,14 @@ class RecurrenceGenerator {
                 "2018-02-26"
             ]);
 
-            DebuggerUtility::var_dump($exclusionArray);
             if (count($exclusionArray) > 0) {
                 $rule->setExDates($exclusionArray);
             }
 
-            DebuggerUtility::var_dump($rule->getString());
-            foreach($this->transformer->transform($rule)->toArray() as $recurrence){
-                /** @var Recurrence $recurrence */
-                DebuggerUtility::var_dump($recurrence->getStart());
-            }
+
+            return $this->transformer->transform($rule)->toArray();
+        } else {
+            return [];
         }
 
     }
