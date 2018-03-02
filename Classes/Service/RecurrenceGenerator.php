@@ -26,6 +26,8 @@ class RecurrenceGenerator {
     /** @var ArrayTransformer */
     protected $transformer = null;
 
+    protected $exceptionCache;
+
     public function __construct()
     {
         $this->freqMap = [
@@ -39,12 +41,12 @@ class RecurrenceGenerator {
     }
 
     /**
-     * @param Event $event
+     * @param Event|ExceptionEvent $event
      * @throws \Recurr\Exception\InvalidArgument
      * @throws \Recurr\Exception\InvalidWeekday
      * @return array
      */
-    public function createRecurrencesFromEvent(Event $event)
+    public function createRecurrencesFromEvent($event)
     {
         // Todo: Es gibt auch Exception-Events mit Recurrences, diese habe ich noch nicht berücksichtigt...
         if ($event->getFreq()) {
@@ -71,35 +73,41 @@ class RecurrenceGenerator {
             }
             if ($event->getBymonth()) {
                 $rule->setByMonth(explode(',', (strtoupper($event->getBymonth()))));
-            }
+            };
 
-            ;
-
-            foreach($event->getExceptionEvent()->toArray() as $exceptionEvent) {
-                /** @var ExceptionEvent $exceptionEvent */
-                if (Carbon::parse($exceptionEvent->getStartDate())->getTimestamp() > Carbon::parse($rule->getUntil())->getTimestamp()) {
-                    #continue;
-                }
-                //DebuggerUtility::var_dump($exceptionEvent);
-                if ($exceptionEvent->getStopDate()) {
-                    // it is a range
-                    $theDay = Carbon::parse($exceptionEvent->getStartDate());
-                    while($theDay->getTimestamp() <= Carbon::parse($exceptionEvent->getStopDate())->getTimestamp()) {
-                        $exclusionArray[] = $theDay->toDateString();
-                        $theDay->addDay(1);
+            // nur für events
+            if ($event instanceof Event) {
+                foreach($event->getExceptionEvent()->toArray() as $exceptionEvent) {
+                    /** @var ExceptionEvent $exceptionEvent */
+                    if (Carbon::parse($exceptionEvent->getStartDate())->getTimestamp() > Carbon::parse($rule->getUntil())->getTimestamp()) {
+                        #continue;
                     }
-                } else {
-                    // it is a single date
-                    $exclusionArray[] = $exceptionEvent->getStartDate();
+                    // Recurrences of exception
+                    if ($exceptionEvent->getFreq()) {
+                        if (!key_exists($exceptionEvent->getUid())) {
+                            $exceptionRecurrences = $this->createRecurrencesFromEvent($exceptionEvent);
+                            $this->exceptionCache[$exceptionEvent->getUid()] = $exceptionRecurrences;
+                        }
+                    }
+                    //DebuggerUtility::var_dump($exceptionEvent);
+                    if ($exceptionEvent->getStopDate()) {
+                        // it is a range
+                        $theDay = Carbon::parse($exceptionEvent->getStartDate());
+                        while($theDay->getTimestamp() <= Carbon::parse($exceptionEvent->getStopDate())->getTimestamp()) {
+                            $exclusionArray[] = $theDay->toDateString();
+                            $theDay->addDay(1);
+                        }
+                    } else {
+                        // it is a single date
+                        $exclusionArray[] = $exceptionEvent->getStartDate();
+                    }
+                }
+
+                if (count($exclusionArray) > 0) {
+                    $rule->setExDates($exclusionArray);
                 }
             }
-            $rule->setExDates([
-                "2018-02-26"
-            ]);
 
-            if (count($exclusionArray) > 0) {
-                $rule->setExDates($exclusionArray);
-            }
 
 
             return $this->transformer->transform($rule)->toArray();
