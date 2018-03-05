@@ -22,7 +22,7 @@ class ExceptionEventGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repos
      * @var array
      */
     protected $defaultOrderings = [
-        'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+        'uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
     ];
 
     public function initializeObject()
@@ -39,6 +39,7 @@ class ExceptionEventGroupRepository extends \TYPO3\CMS\Extbase\Persistence\Repos
         // Einstellungen als Default setzen
         # $this->setDefaultQuerySettings($querySettings);
     }
+
 
 
 }

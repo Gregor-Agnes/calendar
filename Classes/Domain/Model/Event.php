@@ -250,6 +250,8 @@ class Event extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * exceptionEventGroup
      *
+     * TODO Eventuell rausnehmen, wird NICHT aufgelöst, zughörigie ExceptionEvents werden im Repository schon zum Event hinzugefügt
+     *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Zwo3\Calendar\Domain\Model\ExceptionEventGroup>
      */
     protected $exceptionEventGroup = null;

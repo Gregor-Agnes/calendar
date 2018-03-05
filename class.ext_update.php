@@ -75,7 +75,10 @@ stop = CONCAT(SUBSTRING(`end_datetime`,1,4), \'-\', SUBSTRING(`end_datetime`,5,2
             ->add(
                 'set',
                 /** @lang SQL */
-                'stop_date = CONCAT(SUBSTRING(`until`,1,4), \'-\', SUBSTRING(`until`,5,2), \'-\', SUBSTRING(`until`,7,2))'
+                'stop_date = CONCAT(SUBSTRING(`until`,1,4), \'-\', SUBSTRING(`until`,5,2), \'-\', SUBSTRING(`until`,7,2)),
+                start = start_date,
+stop = CONCAT(SUBSTRING(`until`,1,4), \'-\', SUBSTRING(`until`,5,2), \'-\', SUBSTRING(`until`,7,2))'
+
             )
             ->execute()
             ;

@@ -35,6 +35,8 @@ config.tx_extbase {
 					recordType = 0
 					columns {
 						stop_date.mapOnProperty = stopDate
+						stop.mapOnProperty = stop
+						start.mapOnProperty = start
 					}
 				}
 			}

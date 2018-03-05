@@ -10,6 +10,7 @@ namespace Zwo3\Calendar\Domain\Repository;
  ***/
 
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * The repository for Events
@@ -22,7 +23,7 @@ class ExceptionEventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      * @var array
      */
     protected $defaultOrderings = [
-        'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
+        'uid' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
     ];
 
     public function initializeObject()
@@ -39,6 +40,9 @@ class ExceptionEventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         // Einstellungen als Default setzen
         # $this->setDefaultQuerySettings($querySettings);
     }
+
+
+
 
 
 }
