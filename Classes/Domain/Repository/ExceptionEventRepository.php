@@ -38,7 +38,7 @@ class ExceptionEventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $querySettings->setRespectStoragePage(false);
 
         // Einstellungen als Default setzen
-        # $this->setDefaultQuerySettings($querySettings);
+         $this->setDefaultQuerySettings($querySettings);
     }
 
 

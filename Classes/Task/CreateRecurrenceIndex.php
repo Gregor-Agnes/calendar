@@ -35,23 +35,27 @@ class CreateRecurrenceIndex extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
     protected $timezone = 'Europe/Berlin';
 
     /**
+     * @var ObjectManager
+     */
+    protected $objectManager = null;
+
+
+
+
+    /**
      * @return bool
      * @throws \Recurr\Exception\InvalidArgument
      * @throws \Recurr\Exception\InvalidWeekday
      */
     public function execute()
     {
-        /** @var ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->eventRepository = $objectManager->get(EventRepository::class);
+        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
-        $events = $this->eventRepository->findAll();
-
-        //DebuggerUtility::var_dump($events);
-
+        $this->eventRepository = $this->objectManager->get(EventRepository::class);
+        $events = $this->eventRepository->findAll(false, 0, true);
 
         /** @var \Zwo3\Calendar\Service\RecurrenceGenerator $recurrenceGenerator */
-        $recurrenceGenerator = $objectManager->get(RecurrenceGenerator::class);
+        $recurrenceGenerator = $this->objectManager->get(RecurrenceGenerator::class);
 
         // Clear the index
         GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable('tx_cal_index')->truncate('tx_cal_index');
@@ -60,9 +64,10 @@ class CreateRecurrenceIndex extends \TYPO3\CMS\Scheduler\Task\AbstractTask {
             /** @var Event $event */
 
             $recurrences = $recurrenceGenerator->createRecurrencesFromEvent($event);
+            //DebuggerUtility::var_dump($recurrences);
             $dataArray = [];
             foreach ($recurrences as $recurrence) {
-                //DebuggerUtility::var_dump($recurrence);
+                #DebuggerUtility::var_dump($recurrence);
                 /** @var Recurrence $recurrence */
                 $dataArray[] = [
                   'start' => $recurrence->getStart()->format('Y-m-d H:i:s'),

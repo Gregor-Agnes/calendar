@@ -5,6 +5,10 @@ config.tx_extbase {
 				mapping {
 					tableName = tx_cal_event
 					recordType = 0
+					columns {
+						stop.mapOnProperty = stop
+						start.mapOnProperty = start
+					}
 				}
 			}
 

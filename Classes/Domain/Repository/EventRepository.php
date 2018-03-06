@@ -28,6 +28,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\IntegerConverter;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use Zwo3\Calendar\Domain\Model\Event;
+use Zwo3\Calendar\Service\RecurrenceGenerator;
 
 /**
  * The repository for Events
@@ -52,12 +53,20 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     protected $exceptionEventGroupRepository = null;
 
     /**
+     * @var RecurrenceGenerator
+     */
+    protected $recurrenceGenerator = null;
+
+    /**
      * @var array
      */
     protected $defaultOrderings = [
         'sorting' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_ASCENDING
     ];
 
+    /**
+     *
+     */
     public function initializeObject()
     {
         // Einstellungen laden
@@ -68,6 +77,8 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         #$querySettings->setSomething();
 
         $querySettings->setRespectStoragePage(false);
+
+        $this->recurrenceGenerator = $this->objectManager->get(RecurrenceGenerator::class);
 
         // Einstellungen als Default setzen
         # $this->setDefaultQuerySettings($querySettings);
@@ -91,7 +102,7 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findAll($withRecurrence = true, $maxResults = 200000, $buildRecurrence = false)
+    public function findAll($withRecurrence = true, $maxResults = 200000)
     {
 
         /** @var QueryBuilder $queryBuilder */
@@ -101,7 +112,7 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
        // DebuggerUtility::var_dump($queryBuilder->getRestrictions());
 
         $queryBuilder
-            ->add('select', 'event.* , CAST(category_id AS CHAR) category_id')
+            ->add('select', 'event.*, CAST(category_id AS CHAR) category_id')
             ->groupBy('event.uid')
             ->from('tx_cal_event', 'event')
             ->where(
@@ -110,12 +121,18 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             )
         ;
         if ($withRecurrence) {
-            $queryBuilder->leftJoin(
+            // get the Recurrences from the Index-Table
+            $queryBuilder->add('select', 'event.* , index.start, index.stop, CAST(category_id AS CHAR) category_id')
+                ->leftJoin(
                 'event',
                 'tx_cal_index',
                 'index',
                 $queryBuilder->expr()->eq('index.event_uid', $queryBuilder->quoteIdentifier('event.uid'))
-            );
+            )
+                ->groupBy('index.uid')
+                ->orderBy('index.start')
+
+            ;
         }
         if ($maxResults) {
             $queryBuilder->setMaxResults($maxResults);
@@ -188,10 +205,10 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         //$exceptionEventGroupMappingConfiguration = $mappingConfiguration->getConfigurationFor('exceptionEventGroup');
 
         //DebuggerUtility::var_dump($exceptionEventGroupMappingConfiguration->getTargetPropertyName('exceptionEventGroups'));
-        if ($buildRecurrence) {
             foreach ($eventsArray as $event) {
+                $exclusions = [];
                 # DebuggerUtility::var_dump($event);
-                /** @var Event $event */
+                /** @var Event $eventObject */
                 $eventObject = $this->objectManager->get('TYPO3\CMS\Extbase\Property\PropertyMapper')
                     ->convert(
                         $event,
@@ -199,62 +216,9 @@ class EventRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                         $mappingConfiguration
                     );
 // get the Exception Events
-                $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_exception_event');
-                $exceptionEventIds = $queryBuilder
-                    ->select('uid_foreign')
-                    ->from('tx_cal_exception_event_mm', 'ee_mm')
-                    ->where(
-                        $queryBuilder->expr()->eq('uid_local', $event['uid']),
-                        $queryBuilder->expr()->eq('tablenames', '"tx_cal_exception_event"')
-                    )
-                    ->execute()
-                    ->fetchAll();
-
-                #DebuggerUtility::var_dump($exceptionEventIds);
-
-                foreach($exceptionEventIds as $exceptionEventId) {
-                    //DebuggerUtility::var_dump($this->exceptionEventRepository->findByUid($exceptionEventId));
-                    if ($this->exceptionEventRepository->findByUid($exceptionEventId)) {
-                        $eventObject->getExceptionEvent()->attach( $this->exceptionEventRepository->findByUid($exceptionEventId));
-                    }
-                }
-
-                #DebuggerUtility::var_dump($eventObject);
-
-
-                // ExceptionEventGroups werden hier schon nach ExceptionEvents aufgelöst und attached
-                $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('tx_cal_exception_event_group_mm');
-                $queryBuilder
-                    ->select('eeg_mm.uid_foreign')
-                    ->from('tx_cal_exception_event_group_mm', 'eeg_mm')
-                    ->leftJoin(
-                        'eeg_mm',
-                        'tx_cal_exception_event_mm',
-                        'ee_mm',
-                        'eeg_mm.uid_local = ee_mm.uid_foreign AND ee_mm.tablenames = "tx_cal_exception_event_group"'
-                    )
-                    ->where(
-                        $queryBuilder->expr()->eq('ee_mm.uid_local', $event['uid'])
-                    //$queryBuilder->expr()->eq('ee_mm.tablenames', '"tx_cal_exception_event_group"')
-                    )
-                ;
-                #DebuggerUtility::var_dump($queryBuilder->getSQL());
-                $exceptionEventIds =  $queryBuilder->execute()
-                    ->fetchAll();
-
-                foreach($exceptionEventIds as $exceptionEventId) {
-                    if ($this->exceptionEventRepository->findByUid($exceptionEventId)) {
-                        $eventObject->getExceptionEvent()->attach( $this->exceptionEventRepository->findByUid($exceptionEventId));
-                    }
-                }
-
-                unset($exceptionEventIds);
-
-                # DebuggerUtility::var_dump($eventObject);
 
                 $events[] = $eventObject;
             }
-        }
         //DebuggerUtility::var_dump($events);
         return $events;
 
